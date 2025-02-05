@@ -6,7 +6,12 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://emailsenderbyanubhav.netlify.app/",
+    methods: ["POST", "GET", "PUT"],
+  })
+);
 app.use(express.json());
 
 let transporter = nodemailer.createTransport({
@@ -62,15 +67,15 @@ ${process.env.COMPANY_URL}`,
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-        res.status(500).send({
-          success: false,
-          message: "Error sending email",
-        });
+      res.status(500).send({
+        success: false,
+        message: "Error sending email",
+      });
     } else {
-        res.send({
-          success: true,
-          message: "Email sent",
-        });
+      res.send({
+        success: true,
+        message: "Email sent",
+      });
     }
   });
 });
